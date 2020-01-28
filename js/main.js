@@ -29,9 +29,9 @@ var BUILD_PHOTO = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http:/
 
 var DESCRIPTION = 'Очень классный тип жилья - ' + BUILD_TYPE[getRandomInt(0, BUILD_TYPE.length - 1)] + ', приезжайте, вам понравится!';
 
-var OFFSET_X = 20;
+var OFFSET_X = 25;
 
-var OFFSET_Y = 62;
+var OFFSET_Y = 70;
 
 var bodyWidht = document.body.clientWidth;
 
