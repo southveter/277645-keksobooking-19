@@ -29,9 +29,15 @@ var BUILD_PHOTO = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http:/
 
 var DESCRIPTION = 'Очень классный тип жилья - ' + BUILD_TYPE[getRandomInt(0, BUILD_TYPE.length - 1)] + ', приезжайте, вам понравится!';
 
-var OFFSET_X = 25;
+var MAP_START_X = 0;
 
-var OFFSET_Y = 70;
+var MAP_START_Y = 130;
+
+var MAP_END_Y = 630;
+
+var PIN_WIDTH = 50;
+
+var PIN_HEIGHT = 70;
 
 var bodyWidht = document.body.clientWidth;
 
@@ -60,8 +66,8 @@ var object = function () {
     },
 
     location: {
-      x: getRandomInt(0, bodyWidht),
-      y: getRandomInt(130, 630)
+      x: getRandomInt(MAP_START_X + PIN_WIDTH / 2, bodyWidht - PIN_WIDTH / 2),
+      y: getRandomInt(MAP_START_Y, MAP_END_Y)
     }
   };
 };
@@ -70,7 +76,7 @@ var OBJECTS_AMOUNT = 8;
 
 var createObjects = function (count) {
   var offers = [];
-  for (var i = 0; i <= count; i++) {
+  for (var i = 0; i < count; i++) {
     offers.push(object());
   }
   return offers;
@@ -83,7 +89,7 @@ document.querySelector('.map').classList.remove('map--faded');
 
 var renderPin = function (offer) {
   var pinElement = pinTemplate.cloneNode(true);
-  pinElement.style = 'left: ' + (offer.location.x + OFFSET_X) + 'px;' + ' top: ' + (offer.location.y + OFFSET_Y) + 'px;';
+  pinElement.style = 'left: ' + (offer.location.x - (PIN_WIDTH / 2)) + 'px;' + ' top: ' + (offer.location.y - PIN_HEIGHT) + 'px;';
   pinElement.querySelector('img').src = offer.author.avatar;
   pinElement.querySelector('img').alt = offer.offer.title;
 
