@@ -28,6 +28,11 @@ var FEATURE = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'condition
 var BUILD_PHOTO = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
 
 var DESCRIPTION = 'Очень классный тип жилья - ' + BUILD_TYPE[getRandomInt(0, BUILD_TYPE.length - 1)] + ', приезжайте, вам понравится!';
+
+var OFFSET_X = 20;
+
+var OFFSET_Y = 62;
+
 var bodyWidht = document.body.clientWidth;
 
 var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
@@ -71,12 +76,14 @@ var createObjects = function (count) {
   return offers;
 };
 
+var renderedPins = createObjects(OBJECTS_AMOUNT);
+
 
 document.querySelector('.map').classList.remove('map--faded');
 
 var renderPin = function (offer) {
   var pinElement = pinTemplate.cloneNode(true);
-  pinElement.style = 'left: ' + (offer.location.x + 26) + 'px;' + ' top: ' + (offer.location.y + 84) + 'px;';
+  pinElement.style = 'left: ' + (offer.location.x + OFFSET_X) + 'px;' + ' top: ' + (offer.location.y + OFFSET_Y) + 'px;';
   pinElement.querySelector('img').src = offer.author.avatar;
   pinElement.querySelector('img').alt = offer.offer.title;
 
@@ -85,12 +92,10 @@ var renderPin = function (offer) {
 
 var renderPinToDocument = function () {
   var fragment = document.createDocumentFragment();
-  for (var i = 0; i < OBJECTS_AMOUNT; i++) {
-    fragment.appendChild(renderPin(object[i]));
+  for (var i = 0; i < renderedPins.length; i++) {
+    fragment.appendChild(renderPin(renderedPins[i]));
   }
   pinsBlock.appendChild(fragment);
 };
-
-createObjects(OBJECTS_AMOUNT);
 
 renderPinToDocument();
