@@ -72,20 +72,16 @@ var getRandomArray = function (array) {
 var DESCRIPTION = 'Очень классный тип жилья - ' + BUILDING_TYPES[getRandomInt(0, BUILDING_TYPES.length - 1)] + ', приезжайте, вам понравится!';
 
 
-var MAP_START_X = 0;
+var MAP_SIZE = {
+  startX: 0,
+  startY: 130,
+  endY: 630
+};
 
-
-var MAP_START_Y = 130;
-
-
-var MAP_END_Y = 630;
-
-
-var PIN_WIDTH = 50;
-
-
-var PIN_HEIGHT = 70;
-
+var PIN_SIZE = {
+  width: 50,
+  height: 70
+};
 
 var MAX_CARDS = 8;
 
@@ -133,11 +129,11 @@ var formAddress = document.querySelector('#address');
 var adForm = document.querySelector('.ad-form');
 
 var setMainPinCoordinatesInactive = function () {
-  formAddress.placeholder = (Math.round(mainPinCenterCoordinates.left + PIN_WIDTH / 2) + ', ' + Math.round(mainPinCenterCoordinates.top + PIN_HEIGHT / 2));
+  formAddress.placeholder = (Math.round(mainPinCenterCoordinates.left + PIN_SIZE.width / 2) + ', ' + Math.round(mainPinCenterCoordinates.top + PIN_SIZE.height / 2));
 };
 
 var setMainPinCoordinatesActive = function () {
-  formAddress.placeholder = (Math.round(mainPinCenterCoordinates.left + PIN_WIDTH / 2) + ', ' + Math.round(mainPinCenterCoordinates.top + PIN_HEIGHT));
+  formAddress.value = (Math.round(mainPinCenterCoordinates.left + PIN_SIZE.width / 2) + ', ' + Math.round(mainPinCenterCoordinates.top + PIN_SIZE.height));
 };
 
 var setMapFilterSelectsDisabled = function () {
@@ -180,8 +176,8 @@ var getCardData = function () {
     },
 
     location: {
-      x: getRandomInt(MAP_START_X + PIN_WIDTH / 2, bodyWidht - PIN_WIDTH / 2),
-      y: getRandomInt(MAP_START_Y, MAP_END_Y)
+      x: getRandomInt(MAP_SIZE.startX + PIN_SIZE.width / 2, bodyWidht - PIN_SIZE.width / 2),
+      y: getRandomInt(MAP_SIZE.startY, MAP_SIZE.endY)
     }
   };
 };
@@ -203,7 +199,7 @@ var cards = getCards(MAX_CARDS);
 
 var getPin = function (ad) {
   var pinElement = pinTemplate.cloneNode(true);
-  pinElement.style = 'left: ' + (ad.location.x - (PIN_WIDTH / 2)) + 'px;' + ' top: ' + (ad.location.y - PIN_HEIGHT) + 'px;';
+  pinElement.style = 'left: ' + (ad.location.x - (PIN_SIZE.width / 2)) + 'px;' + ' top: ' + (ad.location.y - PIN_SIZE.height) + 'px;';
   pinElement.querySelector('img').src = ad.author.avatar;
   pinElement.querySelector('img').alt = ad.offer.title;
 
@@ -249,12 +245,12 @@ var insertPinToPage = function () {
 // };
 
 
-var typesOfBuildings = {
-  palace: 'Дворец',
-  house: 'Дом',
-  flat: 'Квартира',
-  bungalo: 'Бунгало'
-};
+// var typesOfBuildings = {
+//   palace: 'Дворец',
+//   house: 'Дом',
+//   flat: 'Квартира',
+//   bungalo: 'Бунгало'
+// };
 
 
 // var getPageCard = function (ad) {
@@ -317,42 +313,25 @@ var formRoomNumber = adForm.querySelector('#room_number');
 
 var formCapacity = adForm.querySelector('#capacity');
 
-// var checkValidity = function () {
-//   if (formRoomNumber.value < formCapacity.value) {
-//     formRoomNumber.setCustomValidity('Количество комнат не может быть меньше количества гостей');
-//   } else if (formRoomNumber.value > formCapacity.value) {
-//     formRoomNumber.setCustomValidity('Количество комнат слишком велико - не для гостей');
-//   } else {
-//     formRoomNumber.setCustomValidity('');
-//   }
-// };
-
-// formRoomNumber.addEventListener('change', function () {
-//   checkValidity();
-// });
-
-// formCapacity.addEventListener('change', function () {
-//   checkValidity();
-// });
-
 
 var validateFormRoomsPeoplesHandler = function () {
-  if (formRoomNumber.value === '1' && formCapacity.value === '1') {
-    formRoomNumber.setCustomValidity('');
-  } else if (formRoomNumber.value === '2' && (formCapacity.value === '1' || formCapacity.value === '2')) {
-    formRoomNumber.setCustomValidity('');
-  } else if (formRoomNumber.value === '3' && (formCapacity.value === '1' || formCapacity.value === '2' || formCapacity.value === '3')) {
-    formRoomNumber.setCustomValidity('');
-  } else if (formRoomNumber.value === '100' && (formCapacity.value === '0')) {
-    formRoomNumber.setCustomValidity('');
+  if (formRoomNumber.value === '1' && (formCapacity.value === '0' || formCapacity.value === '2' || formCapacity.value === '3')) {
+    formRoomNumber.setCustomValidity('Выберите большее количество комнат');
+  } else if (formRoomNumber.value === '2' && (formCapacity.value === '0' || formCapacity.value === '3')) {
+    formRoomNumber.setCustomValidity('Выберите большее количество комнат');
+  } else if (formRoomNumber.value === '3' && formCapacity.value === '0') {
+    formRoomNumber.setCustomValidity('Выберите большее количество комнат');
+  } else if (formRoomNumber.value === '100' && (formCapacity.value === '1' || formCapacity.value === '2' || formCapacity.value === '3')) {
+    formCapacity.setCustomValidity('Выберите - не для гостей');
   } else {
-    formCapacity.setCustomValidity('Выберите подходящий вариант');
+    formRoomNumber.setCustomValidity('');
+    formCapacity.setCustomValidity('');
   }
 };
 
 var formBuildingType = adForm.querySelector('#type');
 
-var inputPriceValidityHandler = function () {
+var validateInputPriceHandler = function () {
   if (formBuildingType.value === 'bungalo') {
     formPrice.min = 0;
     formPrice.placeholder = '0';
@@ -368,8 +347,7 @@ var inputPriceValidityHandler = function () {
   }
 };
 
-
-var mainPinMousedownHandler = (function (evt) {
+var activatePageFirstUsageHandler = (function (evt) {
   if (evt.button === LEFT_MOUSE_BTN) {
     mapBlock.classList.remove('map--faded');
     adForm.classList.remove('ad-form--disabled');
@@ -381,11 +359,7 @@ var mainPinMousedownHandler = (function (evt) {
     validateFormTitle();
     validateFormPrice();
     insertPinToPage();
-  }
-});
-
-var mainPinEnterPressHandler = (function (evt) {
-  if (evt.key === ENTER_KEY) {
+  } else if (evt.key === ENTER_KEY) {
     mapBlock.classList.remove('map--faded');
     adForm.classList.remove('ad-form--disabled');
     adForm.action = 'https://js.dump.academy/keksobooking';
@@ -399,9 +373,10 @@ var mainPinEnterPressHandler = (function (evt) {
   }
 });
 
-mainPin.addEventListener('mousedown', mainPinMousedownHandler);
-mainPin.addEventListener('keydown', mainPinEnterPressHandler);
+
+mainPin.addEventListener('mousedown', activatePageFirstUsageHandler);
+mainPin.addEventListener('keydown', activatePageFirstUsageHandler);
 adForm.addEventListener('change', validateFormRoomsPeoplesHandler);
-adForm.addEventListener('change', inputPriceValidityHandler);
+adForm.addEventListener('change', validateInputPriceHandler);
 
 
