@@ -114,7 +114,8 @@
   window.data = {
     PIN_SIZE: PIN_SIZE,
     CARDS: cards,
-    Keys: Keys
+    Keys: Keys,
+    MAP_SIZE: MAP_SIZE
   };
 
 })();
