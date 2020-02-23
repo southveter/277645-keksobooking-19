@@ -32,11 +32,11 @@
     element.appendChild(fragment);
   };
 
-  var typesOfBuildings = {
-    palace: 'Дворец',
-    house: 'Дом',
-    flat: 'Квартира',
-    bungalo: 'Бунгало'
+  var TypesOfBuildings = {
+    PALACE: 'Дворец',
+    HOUSE: 'Дом',
+    FLAT: 'Квартира',
+    BUNGALO: 'Бунгало'
   };
 
   var removeCardHandler = function () {
@@ -65,7 +65,7 @@
     cardElement.querySelector('.popup__title').textContent = ad.offer.title;
     cardElement.querySelector('.popup__text--address').textContent = ad.offer.adress;
     cardElement.querySelector('.popup__text--price').textContent = ad.offer.price + ' ₽/ночь';
-    cardElement.querySelector('.popup__type').textContent = typesOfBuildings[ad.offer.type];
+    cardElement.querySelector('.popup__type').textContent = TypesOfBuildings[ad.offer.type];
     cardElement.querySelector('.popup__text--capacity').textContent = ad.offer.rooms + ' комнаты для ' + ad.offer.guests + ' гостей';
     cardElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + ad.offer.checkin + ',' + ' выезд до ' + ad.offer.checkout + '.';
     createPopupFeatures(ad.offer.features, cardElement.querySelector('.popup__features'));

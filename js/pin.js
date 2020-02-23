@@ -2,7 +2,7 @@
 
 (function () {
   var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
-  var pinsBlock = document.querySelector('.map__pins');
+
 
   var openCardHandler = function (ad) {
     window.card.removeHandler();
@@ -27,15 +27,15 @@
     return pinElement;
   };
 
-  var insertPinToPage = function () {
-    var fragment = document.createDocumentFragment();
-    for (var i = 0; i < window.data.CARDS.length; i++) {
-      fragment.appendChild(getPin(window.data.CARDS[i]));
-    }
-    pinsBlock.appendChild(fragment);
-  };
+  // var insertPinToPage = function (cards) {
+  //   var fragment = document.createDocumentFragment();
+  //   for (var i = 0; i <= window.data.MAX_CARDS; i++) {
+  //     fragment.appendChild(getPin(cards[i]));
+  //   }
+  //   pinsBlock.appendChild(fragment);
+  // };
 
   window.pin = {
-    insertToPage: insertPinToPage
+    get: getPin
   };
 })();
