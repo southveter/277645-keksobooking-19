@@ -16,7 +16,7 @@
 
   var insertPinToPage = function (cards) {
     var fragment = document.createDocumentFragment();
-    for (var i = 0; i <= window.data.MAX_CARDS; i++) {
+    for (var i = 0; i < window.data.MAX_CARDS; i++) {
       fragment.appendChild(window.pin.get(cards[i]));
     }
     pinsBlock.appendChild(fragment);
@@ -27,11 +27,11 @@
       mapBlock.classList.remove('map--faded');
       adForm.classList.remove('ad-form--disabled');
       adForm.action = 'https://js.dump.academy/keksobooking';
-      window.form.setPageOptionsDisabledEnabled(window.form.PAGE_OPTIONS.enable);
+      window.form.setPageOptionsDisabledEnabled(false);
       window.form.setMainPinCoordinatesInactiveActive(window.form.PIN_ATTRIBUTES.value);
       window.form.validateTitle();
       window.form.validatePrice();
-      window.load.data(insertPinToPage);
+      window.backend.loadData(insertPinToPage);
       checkinSelectElement.addEventListener('change', window.form.changeCheckinTimeSelectorHandler);
       checkoutSelectElement.addEventListener('change', window.form.changeCheckoutTimeSelectorHandler);
       adFormAvatar.accept = 'image/*';

@@ -31,15 +31,12 @@
 
   var adFormFieldsets = adForm.querySelectorAll('fieldset');
 
+  var template = document.querySelector('#success').content.querySelector('.success');
+
   var PAGE_FIELDSETS_SELECTS_FILTERS = {
     formFieldsets: adFormFieldsets,
     filterSelects: mapFilterSelects,
     filterFieldsets: mapFilterFieldsets
-  };
-
-  var PAGE_OPTIONS = {
-    disable: true,
-    enable: false
   };
 
   var mainPin = document.querySelector('.map__pin--main');
@@ -65,7 +62,7 @@
     adFormAddress.readOnly = true;
   };
 
-  setPageOptionsDisabledEnabled(PAGE_OPTIONS.disable);
+  setPageOptionsDisabledEnabled(true);
 
   var formTitle = adForm.querySelector('#title');
 
@@ -132,6 +129,23 @@
     checkinSelectElement.value = checkoutSelectElement.value;
   };
 
+  var toggleForm = function () {
+    adForm.reset();
+    adForm.classList.add('ad-form--disabled');
+    setPageOptionsDisabledEnabled(true);
+    setMainPinCoordinatesInactiveActive(PIN_ATTRIBUTES.placeholder);
+  };
+
+  var formSubmitHandler = function () {
+    toggleForm();
+    window.messages.createUpload(template);
+  };
+
+  adForm.addEventListener('submit', function (evt) {
+    window.backend.uploadData(new FormData(adForm), formSubmitHandler);
+    evt.preventDefault();
+  });
+
   window.form = {
     validateTitle: validateFormTitle,
     validatePrice: validateFormPrice,
@@ -139,7 +153,6 @@
     validateInputPriceHandler: validateInputPriceHandler,
     changeCheckinTimeSelectorHandler: changeCheckinTimeSelectorHandler,
     changeCheckoutTimeSelectorHandler: changeCheckoutTimeSelectorHandler,
-    PAGE_OPTIONS: PAGE_OPTIONS,
     setPageOptionsDisabledEnabled: setPageOptionsDisabledEnabled,
     PIN_ATTRIBUTES: PIN_ATTRIBUTES,
     setMainPinCoordinatesInactiveActive: setMainPinCoordinatesInactiveActive
