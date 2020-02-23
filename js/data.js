@@ -115,7 +115,8 @@
     PIN_SIZE: PIN_SIZE,
     CARDS: cards,
     Keys: Keys,
-    MAP_SIZE: MAP_SIZE
+    MAP_SIZE: MAP_SIZE,
+    MAX_CARDS: MAX_CARDS
   };
 
 })();
