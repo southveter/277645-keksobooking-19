@@ -96,7 +96,7 @@
 
       offer: {
         title: TITLES[getRandomInt(0, TITLES.length - 1)],
-        adress: getRandomInt(0, 600) + ', ' + getRandomInt(0, 350),
+        address: getRandomInt(0, 600) + ', ' + getRandomInt(0, 350),
         price: getRandomInt(200, 1000),
         type: BUILDING_TYPES[getRandomInt(0, BUILDING_TYPES.length - 1)],
         rooms: getRandomInt(1, 5),
