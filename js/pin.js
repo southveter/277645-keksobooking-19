@@ -2,6 +2,7 @@
 
 (function () {
   var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
+  var pinsBlock = document.querySelector('.map__pins');
 
   var openCardHandler = function (ad) {
     window.card.removeHandler();
@@ -15,6 +16,7 @@
     pinElement.querySelector('img').alt = ad.offer.title;
     pinElement.classList.add('user-pin');
 
+
     pinElement.addEventListener('click', function () {
       openCardHandler(ad);
     });
@@ -27,7 +29,25 @@
     return pinElement;
   };
 
+  var insertPinToPage = function (serverData) {
+    var data = serverData.slice(0, window.data.MAX_CARDS);
+    var fragment = document.createDocumentFragment();
+    for (var i = 0; i < data.length; i++) {
+      fragment.appendChild(getPin(data[i]));
+    }
+    pinsBlock.appendChild(fragment);
+  };
+
+  var removePins = function () {
+    var pins = pinsBlock.querySelectorAll('.user-pin');
+    pins.forEach(function (item) {
+      item.remove();
+    });
+  };
+
   window.pin = {
-    get: getPin
+    get: getPin,
+    insertToPage: insertPinToPage,
+    remove: removePins
   };
 })();

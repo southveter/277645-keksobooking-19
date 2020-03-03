@@ -9,6 +9,7 @@
     top: window.data.MAP_SIZE.startY - mainPin.offsetHeight,
     bottom: window.data.MAP_SIZE.endY - mainPin.offsetHeight
   };
+  var address = document.querySelector('#address');
 
   var checkLimitMainPinCoordinates = function () {
     if (mainPin.offsetLeft <= mainPinLimit.left) {
@@ -43,6 +44,7 @@
       };
       mainPin.style.top = (mainPin.offsetTop - shift.y) + 'px';
       mainPin.style.left = (mainPin.offsetLeft - shift.x) + 'px';
+      address.value = (mainPin.offsetLeft - shift.x) + ', ' + (mainPin.offsetTop - shift.y);
       checkLimitMainPinCoordinates();
     };
 
