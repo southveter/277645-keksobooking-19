@@ -63,7 +63,7 @@
     var popupClose = cardElement.querySelector('.popup__close');
     cardElement.querySelector('.popup__avatar').src = ad.author.avatar;
     cardElement.querySelector('.popup__title').textContent = ad.offer.title;
-    cardElement.querySelector('.popup__text--address').textContent = ad.offer.adress;
+    cardElement.querySelector('.popup__text--address').textContent = ad.offer.address;
     cardElement.querySelector('.popup__text--price').textContent = ad.offer.price + ' ₽/ночь';
     cardElement.querySelector('.popup__type').textContent = TypesOfBuildings[ad.offer.type];
     cardElement.querySelector('.popup__text--capacity').textContent = ad.offer.rooms + ' комнаты для ' + ad.offer.guests + ' гостей';
