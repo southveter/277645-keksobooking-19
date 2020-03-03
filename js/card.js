@@ -33,10 +33,10 @@
   };
 
   var TypesOfBuildings = {
-    PALACE: 'Дворец',
-    HOUSE: 'Дом',
-    FLAT: 'Квартира',
-    BUNGALO: 'Бунгало'
+    palace: 'Дворец',
+    house: 'Дом',
+    flat: 'Квартира',
+    bungalo: 'Бунгало'
   };
 
   var removeCardHandler = function () {
@@ -80,8 +80,16 @@
     mapFiltersContainer.insertAdjacentElement('beforebegin', getPageCard(ad));
   };
 
+  var removeCard = function () {
+    var card = mapBlock.querySelector('.popup');
+    if (card) {
+      card.remove();
+    }
+  };
+
   window.card = {
     render: renderCard,
-    removeHandler: removeCardHandler
+    removeHandler: removeCardHandler,
+    remove: removeCard
   };
 })();

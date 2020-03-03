@@ -33,6 +33,8 @@
 
   var template = document.querySelector('#success').content.querySelector('.success');
 
+  var resetButton = adForm.querySelector('.ad-form__reset');
+
   var PAGE_FIELDSETS_SELECTS_FILTERS = {
     formFieldsets: adFormFieldsets,
     filterSelects: mapFilterSelects,
@@ -142,8 +144,17 @@
   };
 
   adForm.addEventListener('submit', function (evt) {
-    window.backend.uploadData(new FormData(adForm), formSubmitHandler);
     evt.preventDefault();
+    window.upload.data(new FormData(adForm), formSubmitHandler);
+  });
+
+  resetButton.addEventListener('click', function (evt) {
+    evt.preventDefault();
+    mapFilter.reset();
+    window.upload.xhrSuccessHandler();
+    toggleForm();
+    mainPin.style.top = window.data.DEFAULT_PIN_COORDS.Y + 'px';
+    mainPin.style.left = window.data.DEFAULT_PIN_COORDS.X + 'px';
   });
 
   window.form = {
