@@ -51,7 +51,7 @@
     }
 
     if (guestsSelect.value !== 'any' && isSuited) {
-      isSuited = item.offer.guests >= guestsSelect.value;
+      isSuited = item.offer.guests === +guestsSelect.value;
     }
 
     return isSuited;

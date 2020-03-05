@@ -19,6 +19,20 @@
     value: 'value'
   };
 
+  var ROOM_NUMBERS = {
+    one: '1',
+    two: '2',
+    three: '3',
+    hundred: '100'
+  };
+
+  var GUEST_NUMBERS = {
+    one: '1',
+    two: '2',
+    three: '3',
+    zero: '0'
+  };
+
   var adForm = document.querySelector('.ad-form');
 
   var adFormAddress = adForm.querySelector('input[name=address]');
@@ -89,13 +103,13 @@
   var validateFormRoomsPeoplesHandler = function () {
     formRoomNumber.setCustomValidity('');
     formCapacity.setCustomValidity('');
-    if (formRoomNumber.value === '1' && (formCapacity.value === '0' || formCapacity.value === '2' || formCapacity.value === '3')) {
+    if (formRoomNumber.value === ROOM_NUMBERS.one && (formCapacity.value === GUEST_NUMBERS.zero || formCapacity.value === GUEST_NUMBERS.two || formCapacity.value === GUEST_NUMBERS.three)) {
       formRoomNumber.setCustomValidity('Выберите большее количество комнат');
-    } else if (formRoomNumber.value === '2' && (formCapacity.value === '0' || formCapacity.value === '3')) {
+    } else if (formRoomNumber.value === ROOM_NUMBERS.two && (formCapacity.value === GUEST_NUMBERS.zero || formCapacity.value === GUEST_NUMBERS.three)) {
       formRoomNumber.setCustomValidity('Выберите большее количество комнат');
-    } else if (formRoomNumber.value === '3' && formCapacity.value === '0') {
+    } else if (formRoomNumber.value === ROOM_NUMBERS.three && formCapacity.value === GUEST_NUMBERS.zero) {
       formRoomNumber.setCustomValidity('Выберите большее количество комнат');
-    } else if (formRoomNumber.value === '100' && (formCapacity.value === '1' || formCapacity.value === '2' || formCapacity.value === '3')) {
+    } else if (formRoomNumber.value === ROOM_NUMBERS.hundred && (formCapacity.value === GUEST_NUMBERS.one || formCapacity.value === GUEST_NUMBERS.two || formCapacity.value === GUEST_NUMBERS.three)) {
       formCapacity.setCustomValidity('Выберите - не для гостей');
     }
   };

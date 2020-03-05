@@ -5,31 +5,9 @@
   var mapBlock = document.querySelector('.map');
   var mapFiltersContainer = mapBlock.querySelector('.map__filters-container');
 
-  var createPopupFeatures = function (features, element) {
-    element.textContent = '';
-    var fragment = document.createDocumentFragment();
-    for (var i = 0; i < features.length; i++) {
-      var li = document.createElement('li');
-      li.classList.add('popup__feature', 'popup__feature--' + features[i]);
-      li.textContent = features[i];
-      fragment.appendChild(li);
-    }
-    element.appendChild(fragment);
-  };
-
-  var createPopupPhotos = function (photos, element) {
-    element.textContent = '';
-    var fragment = document.createDocumentFragment();
-    for (var i = 0; i < photos.length; i++) {
-      var image = document.createElement('img');
-      image.src = photos[i];
-      image.classList.add('popup__photo');
-      image.width = '45';
-      image.height = '40';
-      image.alt = 'Фотография жилья';
-      fragment.appendChild(image);
-    }
-    element.appendChild(fragment);
+  var POPUP_PHOTO = {
+    width: 45,
+    height: 40
   };
 
   var TypesOfBuildings = {
@@ -37,6 +15,33 @@
     house: 'Дом',
     flat: 'Квартира',
     bungalo: 'Бунгало'
+  };
+
+  var createPopupFeatures = function (features, element) {
+    element.textContent = '';
+    var fragment = document.createDocumentFragment();
+    features.forEach(function (item, index) {
+      var li = document.createElement('li');
+      li.classList.add('popup__feature', 'popup__feature--' + features[index]);
+      li.textContent = features[index];
+      fragment.appendChild(li);
+    });
+    element.appendChild(fragment);
+  };
+
+  var createPopupPhotos = function (photos, element) {
+    element.textContent = '';
+    var fragment = document.createDocumentFragment();
+    photos.forEach(function (item, index) {
+      var image = document.createElement('img');
+      image.src = photos[index];
+      image.classList.add('popup__photo');
+      image.width = POPUP_PHOTO.width;
+      image.height = POPUP_PHOTO.height;
+      image.alt = 'Фотография жилья';
+      fragment.appendChild(image);
+    });
+    element.appendChild(fragment);
   };
 
   var removeCardHandler = function () {

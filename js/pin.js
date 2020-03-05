@@ -32,9 +32,9 @@
   var insertPinToPage = function (serverData) {
     var data = serverData.slice(0, window.data.MAX_CARDS);
     var fragment = document.createDocumentFragment();
-    for (var i = 0; i < data.length; i++) {
-      fragment.appendChild(getPin(data[i]));
-    }
+    data.forEach(function (item, index) {
+      fragment.appendChild(getPin(data[index]));
+    });
     pinsBlock.appendChild(fragment);
   };
 
