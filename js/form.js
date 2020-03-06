@@ -33,6 +33,8 @@
     zero: '0'
   };
 
+  var mapBlock = document.querySelector('.map');
+
   var adForm = document.querySelector('.ad-form');
 
   var adFormAddress = adForm.querySelector('input[name=address]');
@@ -49,15 +51,35 @@
 
   var resetButton = adForm.querySelector('.ad-form__reset');
 
+  var checkoutSelectElement = document.querySelector('#timeout');
+
+  var checkinSelectElement = document.querySelector('#timein');
+
+  var mainPin = document.querySelector('.map__pin--main');
+
+  var mainPinCenterCoordinates = mainPin.getBoundingClientRect();
+
+  var formAddress = adForm.querySelector('#address');
+
+  var avatarImage = adForm.querySelector('.ad-form-header__preview').querySelector('img');
+
+  var houseImage = adForm.querySelector('.ad-form__photo');
+
+  var formTitle = adForm.querySelector('#title');
+
+  var formPrice = adForm.querySelector('#price');
+
+  var formRoomNumber = adForm.querySelector('#room_number');
+
+  var formCapacity = adForm.querySelector('#capacity');
+
+  var formBuildingType = adForm.querySelector('#type');
+
   var PAGE_FIELDSETS_SELECTS_FILTERS = {
     formFieldsets: adFormFieldsets,
     filterSelects: mapFilterSelects,
     filterFieldsets: mapFilterFieldsets
   };
-
-  var mainPin = document.querySelector('.map__pin--main');
-  var mainPinCenterCoordinates = mainPin.getBoundingClientRect();
-  var formAddress = document.querySelector('#address');
 
   var setMainPinCoordinatesInactiveActive = function (arg) {
     formAddress[arg] = (Math.round(mainPinCenterCoordinates.left + window.data.PIN_SIZE.width / 2) + ', ' + Math.round(mainPinCenterCoordinates.top + window.data.PIN_SIZE.height / 2));
@@ -80,25 +102,17 @@
 
   setPageOptionsDisabledEnabled(true);
 
-  var formTitle = adForm.querySelector('#title');
-
   var validateFormTitle = function () {
     formTitle.required = true;
     formTitle.minLength = FORM_TITLE.minLength;
     formTitle.maxLength = FORM_TITLE.maxLength;
   };
 
-  var formPrice = adForm.querySelector('#price');
-
   var validateFormPrice = function () {
     formPrice.required = true;
     formPrice.type = 'number';
     formPrice.max = FORM_PRICE.max;
   };
-
-  var formRoomNumber = adForm.querySelector('#room_number');
-
-  var formCapacity = adForm.querySelector('#capacity');
 
   var validateFormRoomsPeoplesHandler = function () {
     formRoomNumber.setCustomValidity('');
@@ -113,8 +127,6 @@
       formCapacity.setCustomValidity('Выберите - не для гостей');
     }
   };
-
-  var formBuildingType = adForm.querySelector('#type');
 
   var validateInputPriceHandler = function () {
     if (formBuildingType.value === 'bungalo') {
@@ -132,10 +144,6 @@
     }
   };
 
-  var checkoutSelectElement = document.querySelector('#timeout');
-  var checkinSelectElement = document.querySelector('#timein');
-
-
   var changeCheckinTimeSelectorHandler = function () {
     checkoutSelectElement.value = checkinSelectElement.value;
   };
@@ -145,15 +153,23 @@
     checkinSelectElement.value = checkoutSelectElement.value;
   };
 
-  var toggleForm = function () {
+  var resetPage = function () {
+    window.pin.remove();
+    window.card.remove();
+    mapBlock.classList.add('map--faded');
+    mapFilter.reset();
     adForm.reset();
+    avatarImage.src = 'img/muffin-grey.svg';
+    houseImage.style.backgroundImage = '';
     adForm.classList.add('ad-form--disabled');
     setPageOptionsDisabledEnabled(true);
     setMainPinCoordinatesInactiveActive(PIN_ATTRIBUTES.placeholder);
+    mainPin.style.top = window.data.DEFAULT_PIN_COORDS.Y + 'px';
+    mainPin.style.left = window.data.DEFAULT_PIN_COORDS.X + 'px';
   };
 
   var formSubmitHandler = function () {
-    toggleForm();
+    resetPage();
     window.messages.createUpload(template);
   };
 
@@ -164,11 +180,7 @@
 
   resetButton.addEventListener('click', function (evt) {
     evt.preventDefault();
-    mapFilter.reset();
-    window.upload.xhrSuccessHandler();
-    toggleForm();
-    mainPin.style.top = window.data.DEFAULT_PIN_COORDS.Y + 'px';
-    mainPin.style.left = window.data.DEFAULT_PIN_COORDS.X + 'px';
+    resetPage();
   });
 
   window.form = {
@@ -180,6 +192,7 @@
     changeCheckoutTimeSelectorHandler: changeCheckoutTimeSelectorHandler,
     setPageOptionsDisabledEnabled: setPageOptionsDisabledEnabled,
     PIN_ATTRIBUTES: PIN_ATTRIBUTES,
-    setMainPinCoordinatesInactiveActive: setMainPinCoordinatesInactiveActive
+    setMainPinCoordinatesInactiveActive: setMainPinCoordinatesInactiveActive,
+    resetPage: resetPage
   };
 })();

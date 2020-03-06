@@ -1,15 +1,10 @@
 'use strict';
 
 (function () {
-  var mapBlock = document.querySelector('.map');
   var template = document.querySelector('#error').content.querySelector('.error');
-  var mapFilter = document.querySelector('.map__filters');
 
   var xhrSuccessHandler = function () {
-    window.pin.remove();
-    window.card.remove();
-    mapBlock.classList.add('map--faded');
-    mapFilter.reset();
+    window.form.resetPage();
   };
 
   var xhrErrorHandler = function () {
